@@ -1,0 +1,15 @@
+# Fotos originales sin optimizar (el sitio usa las versiones de assets/img)
+Images/
+
+# Configuración local del editor / herramientas
+.claude/
+.vscode/
+.idea/
+
+# Sistema operativo
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Dependencias
+node_modules/

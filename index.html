@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CinnaRolls · Bakery &amp; Coffee — La Paz, B.C.S.</title>
+  <meta name="description" content="CinnaRolls Bakery & Coffee en La Paz, B.C.S. Roles de canela horneados cada mañana, café de especialidad, desayunos y comida balanceada frente al Mar de Cortés. Reserva tu mesa por WhatsApp.">
+  <meta property="og:title" content="CinnaRolls · Bakery & Coffee — La Paz, B.C.S.">
+  <meta property="og:description" content="Roles de canela recién horneados, café y desayunos frente al malecón de La Paz. Todos los días de 7:00 am a 10:30 pm.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/img/roll-frappes.jpg">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23D9952F'/%3E%3Cpath d='M32 32 a3 3 0 0 1 6 0 a6 6 0 0 1 -12 0 a9 9 0 0 1 18 0 a12 12 0 0 1 -24 0 a15 15 0 0 1 30 0' fill='none' stroke='%23FBF4E9' stroke-width='4.5' stroke-linecap='round'/%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Outfit:wght@300;400;500;600;700&family=Pacifico&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ============ SÍMBOLOS SVG REUTILIZABLES ============ -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="ic-spiral" viewBox="0 0 64 64">
+        <path d="M32 32 a3 3 0 0 1 6 0 a6 6 0 0 1 -12 0 a9 9 0 0 1 18 0 a12 12 0 0 1 -24 0 a15 15 0 0 1 30 0"
+              fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+      </symbol>
+      <symbol id="ic-whatsapp" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m0 1.67c2.2 0 4.26.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23-1.48 0-2.93-.39-4.19-1.15l-.3-.17-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c.01-4.54 3.7-8.24 8.25-8.24M8.53 7.33c-.16 0-.43.06-.66.31-.22.25-.87.85-.87 2.07 0 1.22.89 2.4 1 2.56.14.17 1.76 2.67 4.25 3.73.59.27 1.05.42 1.41.53.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.07-.1-.23-.16-.48-.27-.25-.14-1.47-.74-1.69-.82-.23-.08-.37-.12-.56.12-.16.25-.64.81-.78.97-.15.17-.29.19-.53.07-.26-.13-1.06-.39-2-1.23-.74-.66-1.23-1.47-1.38-1.72-.12-.24-.01-.39.11-.5.11-.11.27-.29.37-.44.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.11-.56-1.35-.77-1.84-.2-.48-.4-.42-.56-.43-.14 0-.3-.01-.47-.01"/>
+      </symbol>
+      <symbol id="ic-facebook" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5.02 3.66 9.19 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.52 1.49-3.91 3.78-3.91 1.09 0 2.23.2 2.23.2v2.47h-1.26c-1.24 0-1.63.77-1.63 1.57v1.88h2.78l-.45 2.91h-2.33V22c4.78-.75 8.44-4.92 8.44-9.94"/>
+      </symbol>
+      <symbol id="ic-pin" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7m0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5"/>
+      </symbol>
+      <symbol id="ic-clock" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2m0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8m.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67Z"/>
+      </symbol>
+      <symbol id="ic-phone" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24 11.36 11.36 0 0 0 3.57.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11.36 11.36 0 0 0 .57 3.57 1 1 0 0 1-.25 1.02Z"/>
+      </symbol>
+      <symbol id="ic-leaf" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17.98.3 1.34.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8"/>
+      </symbol>
+      <symbol id="ic-fire" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14a8 8 0 0 0 16 0C20 8.61 17.41 3.8 13.5.67M11.71 19a3.11 3.11 0 0 1-3.13-3.13c0-1.61 1.04-2.75 2.79-3.1 1.76-.36 3.58-1.21 4.59-2.58.39 1.29.59 2.65.59 4.04a4.84 4.84 0 0 1-4.84 4.77"/>
+      </symbol>
+      <symbol id="ic-coffee" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M2 21h18v-2H2M20 8h-2V5h2m0-2H4v10a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4v-3h2a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2Z"/>
+      </symbol>
+      <symbol id="ic-heart" viewBox="0 0 24 24">
+        <path fill="currentColor" d="m12 21.35-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54Z"/>
+      </symbol>
+      <symbol id="ic-arrow" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11Z"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- ============ NAVEGACIÓN ============ -->
+  <header class="nav" id="navbar">
+    <div class="container nav__inner">
+      <a href="#inicio" class="brand" aria-label="CinnaRolls, ir al inicio">
+        <span class="brand__mark"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#D9952F"/><path d="M32 32 a3 3 0 0 1 6 0 a6 6 0 0 1 -12 0 a9 9 0 0 1 18 0 a12 12 0 0 1 -24 0 a15 15 0 0 1 30 0" fill="none" stroke="#FBF4E9" stroke-width="4.5" stroke-linecap="round"/></svg></span>
+        <span class="brand__text">
+          <span class="brand__name">CinnaRolls</span>
+          <span class="brand__tag">Bakery &amp; Coffee</span>
+        </span>
+      </a>
+
+      <nav class="nav__links" id="navLinks" aria-label="Navegación principal">
+        <a href="#inicio" class="nav__link is-active" data-i18n="nav.home">Inicio</a>
+        <a href="#nosotros" class="nav__link" data-i18n="nav.about">Nosotros</a>
+        <a href="#menu" class="nav__link" data-i18n="nav.menu">Menú</a>
+        <a href="#galeria" class="nav__link" data-i18n="nav.gallery">Galería</a>
+        <a href="#visitanos" class="nav__link" data-i18n="nav.visit">Visítanos</a>
+        <a href="#reservar" class="btn btn--amber nav__cta">
+          <svg class="ic"><use href="#ic-whatsapp"/></svg> <span data-i18n="nav.reserve">Reservar</span>
+        </a>
+      </nav>
+
+      <div class="nav__side">
+        <div class="lang" role="group" aria-label="Idioma / Language">
+          <button class="lang__btn is-active" data-lang="es" aria-label="Español">ES</button>
+          <span class="lang__sep" aria-hidden="true">·</span>
+          <button class="lang__btn" data-lang="en" aria-label="English">EN</button>
+        </div>
+
+        <button class="nav__burger" id="navBurger" aria-label="Abrir menú" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ 1. HERO / PRESENTACIÓN ============ -->
+    <section class="hero" id="inicio">
+      <div class="hero__spiral" aria-hidden="true">
+        <svg viewBox="0 0 64 64"><use href="#ic-spiral"/></svg>
+      </div>
+
+      <div class="container hero__grid">
+        <div class="hero__copy">
+          <p class="eyebrow reveal">
+            <svg class="ic ic--amber"><use href="#ic-pin"/></svg>
+            La Paz, Baja California Sur
+          </p>
+          <h1 class="hero__title reveal d-1" data-i18n="hero.title">
+            El placer de lo<br>
+            <em>recién horneado</em>,<br>
+            frente al mar
+          </h1>
+          <p class="hero__sub reveal d-2" data-i18n="hero.sub">
+            Roles de canela que salen del horno cada mañana, café de especialidad
+            y cocina fresca y balanceada. Un rincón dulce en el corazón del malecón
+            para empezar bien el día… o terminarlo mejor.
+          </p>
+          <div class="hero__actions reveal d-3">
+            <a class="btn btn--dark" href="#menu"><span data-i18n="hero.btnMenu">Explorar el menú</span> <svg class="ic"><use href="#ic-arrow"/></svg></a>
+            <a class="btn btn--whatsapp" id="heroWhats" href="https://wa.me/526122914014?text=%C2%A1Hola%20CinnaRolls!%20%F0%9F%8D%A9%20Me%20gustar%C3%ADa%20reservar%20una%20mesa." target="_blank" rel="noopener">
+              <svg class="ic"><use href="#ic-whatsapp"/></svg> <span data-i18n="hero.btnReserve">Reservar mesa</span>
+            </a>
+          </div>
+          <div class="hero__chips reveal d-4">
+            <span class="chip"><svg class="ic"><use href="#ic-clock"/></svg> <span data-i18n="hero.chipHours">Todos los días · 7:00 am – 10:30 pm</span></span>
+            <span class="chip"><svg class="ic"><use href="#ic-pin"/></svg> <span data-i18n="hero.chipBranches">2 sucursales en el Centro</span></span>
+          </div>
+        </div>
+
+        <div class="hero__visual reveal d-2">
+          <figure class="hero__arch">
+            <img src="assets/img/roll-frappes.jpg" alt="Rol de canela glaseado con dos frappes de café CinnaRolls" width="985" height="1207">
+          </figure>
+          <div class="hero__card hero__card--a">
+            <svg class="ic ic--amber"><use href="#ic-fire"/></svg>
+            <div><strong data-i18n="hero.cardA.t">Horneado diario</strong><span data-i18n="hero.cardA.s">Del horno a tu mesa</span></div>
+          </div>
+          <div class="hero__card hero__card--b">
+            <svg class="ic ic--amber"><use href="#ic-coffee"/></svg>
+            <div><strong data-i18n="hero.cardB.t">Café de especialidad</strong><span data-i18n="hero.cardB.s">Caliente o frío, como te gusta</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__track">
+          <span data-i18n="mq.1">Roles de canela</span><i>✺</i><span data-i18n="mq.2">Café de especialidad</span><i>✺</i><span data-i18n="mq.3">Desayunos</span><i>✺</i><span data-i18n="mq.4">Postres</span><i>✺</i><span data-i18n="mq.5">Comida balanceada</span><i>✺</i><span data-i18n="mq.6">Frappes</span><i>✺</i>
+          <span data-i18n="mq.1">Roles de canela</span><i>✺</i><span data-i18n="mq.2">Café de especialidad</span><i>✺</i><span data-i18n="mq.3">Desayunos</span><i>✺</i><span data-i18n="mq.4">Postres</span><i>✺</i><span data-i18n="mq.5">Comida balanceada</span><i>✺</i><span data-i18n="mq.6">Frappes</span><i>✺</i>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 2. QUÉ NOS CARACTERIZA ============ -->
+    <section class="about section" id="nosotros">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="eyebrow"><svg class="ic ic--amber"><use href="#ic-spiral"/></svg> <span data-i18n="about.eyebrow">Lo que nos hace únicos</span></p>
+          <h2 data-i18n="about.title">Cada platillo, una pequeña<br><em>obra de arte</em></h2>
+          <p class="section__lead" data-i18n="about.lead">
+            En CinnaRolls creemos que comer rico y cuidarte no están peleados.
+            Por eso cuidamos cada detalle: del glaseado del rol a la presentación del plato.
+          </p>
+        </div>
+
+        <div class="about__grid">
+          <article class="feature reveal">
+            <figure><img src="assets/img/roles-vitrina.jpg" alt="Vitrina llena de roles de canela recién glaseados" loading="lazy"></figure>
+            <div class="feature__body">
+              <span class="feature__icon"><svg class="ic"><use href="#ic-fire"/></svg></span>
+              <h3 data-i18n="about.f1.t">Roles horneados cada mañana</h3>
+              <p data-i18n="about.f1.p">Original, manzana, nuez, guayaba, Nutella… masa suave, canela generosa y glaseado que se derrite. Nunca del día anterior.</p>
+            </div>
+          </article>
+
+          <article class="feature reveal d-1">
+            <figure><img src="assets/img/cafe-malecon.jpg" alt="Vaso de café CinnaRolls para llevar con vista al malecón de La Paz" loading="lazy"></figure>
+            <div class="feature__body">
+              <span class="feature__icon"><svg class="ic"><use href="#ic-coffee"/></svg></span>
+              <h3 data-i18n="about.f2.t">Café con vista al malecón</h3>
+              <p data-i18n="about.f2.p">Espresso, latte helado o frappe: tu bebida perfecta con la brisa del Mar de Cortés a unos pasos de tu mesa.</p>
+            </div>
+          </article>
+
+          <article class="feature reveal d-2">
+            <figure><img src="assets/img/desayuno-ligero.jpg" alt="Avocado toast con huevo y ensalada fresca" loading="lazy"></figure>
+            <div class="feature__body">
+              <span class="feature__icon"><svg class="ic"><use href="#ic-leaf"/></svg></span>
+              <h3 data-i18n="about.f3.t">Sano y balanceado, también</h3>
+              <p data-i18n="about.f3.p">Avocado toast, omelettes, ensaladas y hot cakes veganos. Opciones frescas y ligeras sin sacrificar ni una pizca de sabor.</p>
+            </div>
+          </article>
+
+          <article class="feature reveal d-3">
+            <figure><img src="assets/img/decoracion.jpg" alt="Interior acogedor de CinnaRolls con pizarras y focos vintage" loading="lazy"></figure>
+            <div class="feature__body">
+              <span class="feature__icon"><svg class="ic"><use href="#ic-heart"/></svg></span>
+              <h3 data-i18n="about.f4.t">Un rincón para quedarse</h3>
+              <p data-i18n="about.f4.p">Ladrillo, luz cálida y aroma a canela. El ambiente perfecto para desayunar en familia, trabajar o platicar sin prisa.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="banner reveal">
+        <img src="assets/img/atardecer.jpg" alt="Atardecer rosado sobre la bahía de La Paz con veleros" loading="lazy">
+        <div class="banner__overlay">
+          <p class="banner__quote" data-i18n="about.quote">“Un rol de canela calientito, un buen café<br>y el atardecer del malecón. <em>Así sabe La Paz.</em>”</p>
+          <a class="btn btn--light" href="#visitanos"><span data-i18n="about.btnFind">Encuéntranos</span> <svg class="ic"><use href="#ic-arrow"/></svg></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 3. MENÚ INTERACTIVO ============ -->
+    <section class="menu section" id="menu">
+      <div class="container">
+        <div class="section__head section__head--light reveal">
+          <p class="eyebrow eyebrow--light"><svg class="ic ic--amber"><use href="#ic-spiral"/></svg> <span data-i18n="menu.eyebrow">Nuestro menú</span></p>
+          <h2 data-i18n="menu.title">Antojos para <em>cada hora</em> del día</h2>
+          <p class="section__lead" data-i18n="menu.lead">
+            Desayunos de 7:00 am a 1:00 pm · Comidas de 1:00 pm a 9:30 pm · Roles y café, todo el día.
+          </p>
+        </div>
+
+        <div class="menu__tabs reveal" role="tablist" aria-label="Categorías del menú">
+          <button class="menu__tab is-active" role="tab" aria-selected="true" data-tab="roles" data-i18n="menu.tabRoles">🥐 Roles &amp; Postres</button>
+          <button class="menu__tab" role="tab" aria-selected="false" data-tab="desayunos" data-i18n="menu.tabBreakfast">🍳 Desayunos</button>
+          <button class="menu__tab" role="tab" aria-selected="false" data-tab="comidas" data-i18n="menu.tabLunch">🥪 Comidas</button>
+          <button class="menu__tab" role="tab" aria-selected="false" data-tab="bebidas" data-i18n="menu.tabDrinks">🥤 Bebidas</button>
+        </div>
+
+        <!-- ROLES & POSTRES -->
+        <div class="menu__panel is-active" id="panel-roles" role="tabpanel">
+          <figure class="menu__photo reveal">
+            <img src="assets/img/roll-chocolate.jpg" alt="Rol de canela coronado con Nutella" loading="lazy">
+            <figcaption data-i18n="menu.figRoles">Rol con Nutella, el consentido de la casa</figcaption>
+          </figure>
+          <ul class="menu__list">
+            <li class="menu__item reveal">
+              <div class="menu__row"><h4><span data-i18n="menu.r1.n">Rol de Canela Original</span> <span class="badge badge--fav" data-i18n="badge.fav">El favorito</span></h4><span class="dots"></span><span class="price">$52</span></div>
+              <p data-i18n="menu.r1.d">Nuestra receta clásica: masa suave, canela y glaseado cremoso. Horneado del día, siempre.</p>
+            </li>
+            <li class="menu__item reveal">
+              <div class="menu__row"><h4><span data-i18n="menu.r2.n">Roles de sabor</span></h4><span class="dots"></span><span class="price">$58</span></div>
+              <p data-i18n="menu.r2.d">Manzana, nuez, plátano, guayaba, Nutella o chocolate. Elige tu espiral favorita.</p>
+            </li>
+            <li class="menu__item reveal">
+              <div class="menu__row"><h4><span data-i18n="menu.r3.n">Rol de Canela Deli</span></h4><span class="dots"></span><span class="price">$112</span></div>
+              <p data-i18n="menu.r3.d">La versión salada: relleno de jamón, tocino, queso crema y queso chihuahua.</p>
+            </li>
+            <li class="menu__item reveal">
+              <div class="menu__row"><h4><span data-i18n="menu.r4.n">Rol de canela y tocino</span></h4><span class="dots"></span><span class="price">$85</span></div>
+              <p data-i18n="menu.r4.d">Dulce y salado en su punto: rol con tocino y miel, acompañado de fruta.</p>
+            </li>
+            <li class="menu__item reveal">
+              <div class="menu__row"><h4><span data-i18n="menu.r5.n">Pasteles</span></h4><span class="dots"></span><span class="price">$68</span></div>
+              <p data-i18n="menu.r5.d">Cheesecake de fresa, Oreo o brownie · zanahoria · tiramisú · chocolate · Nutella · pay de manzana.</p>
+            </li>
+            <li class="menu__item reveal">
+              <div class="menu__row"><h4><span data-i18n="menu.r6.n">Panqués</span></h4><span class="dots"></span><span class="price">$40</span></div>
+              <p data-i18n="menu.r6.d">Dátil, zanahoria, limón o brownie. Perfectos para acompañar tu café.</p>
+            </li>
+            <li class="menu__item reveal">
+              <div class="menu__row"><h4><span data-i18n="menu.r7.n">Galletas</span></h4><span class="dots"></span><span class="price">$28–36</span></div>
+              <p data-i18n="menu.r7.d">De avena o de mantequilla decorada.</p>
+            </li>
+          </ul>
+        </div>
+
+        <!-- DESAYUNOS -->
+        <div class="menu__panel" id="panel-desayunos" role="tabpanel" hidden>
+          <figure class="menu__photo">
+            <img src="assets/img/chilaquiles.jpg" alt="Chilaquiles verdes con crema, queso y frijoles refritos" loading="lazy">
+            <figcaption data-i18n="menu.figBreakfast">Chilaquiles verdes con el toque de la casa</figcaption>
+          </figure>
+          <ul class="menu__list">
+            <li class="menu__item">
+              <div class="menu__row"><h4><span data-i18n="menu.b1.n">Desayuno CinnaRolls</span> <span class="badge badge--fav" data-i18n="badge.flag">Insignia</span></h4><span class="dots"></span><span class="price">$175</span></div>
+              <p data-i18n="menu.b1.d">Rol de canela estilo “francés” con par de huevos, tocino, jamón, papa y fruta.</p>
+            </li>
+            <li class="menu__item">
+              <div class="menu__row"><h4><span data-i18n="menu.b2.n">Desayuno de la Costa</span></h4><span class="dots"></span><span class="price">$195</span></div>
+              <p data-i18n="menu.b2.d">Guiso de machaca de marlín con chilaquiles, par de huevos al gusto y frijol.</p>
+            </li>
+            <li class="menu__item">
+              <div class="menu__row"><h4><span data-i18n="menu.b3.n">Desayuno Sin Culpa</span> <span class="badge badge--green" data-i18n="badge.light">Ligero</span></h4><span class="dots"></span><span class="price">$165</span></div>
+              <p data-i18n="menu.b3.d">Huevos revueltos con morrón y queso fresco, ensalada y quesadilla de maíz en salsa verde o roja.</p>
+            </li>
+            <li class="menu__item">
+              <div class="menu__row"><h4><span data-i18n="menu.b4.n">Chilaquiles</span></h4><span class="dots"></span><span class="price">$125–195</span></div>
+              <p data-i18n="menu.b4.d">Naturales con queso, con pollo, con huevos, con arrachera o chicharrón prensado. Salsa verde o roja.</p>
+            </li>
+            <li class="menu__item">
+              <div class="menu__row"><h4><span data-i18n="menu.b5.n">Omelette al gusto</span></h4><span class="dots"></span><span class="price">$185</span></div>
+              <p data-i18n="menu.b5.d">Tres ingredientes a elegir, acompañado de frijol y papa. También en versión de claras.</p>
+            </li>
+            <li class="menu__item">
+              <div class="menu__row"><h4><span data-i18n="menu.b6.n">Hot cakes veganos</span> <span class="badge badge--green" data-i18n="badge.vegan">Vegano</span></h4><span class="dots"></span><span class="price">$175</span></div>
+              <p data-i18n="menu.b6.d">Hechos con avena, leche de soya y plátano, acompañados de fruta fresca.</p>
+            </li>
+            <li class="menu__item">
+              <div class="menu__row"><h4><span data-i18n="menu.b7.n">Avocado toast</span></h4><span class="dots"></span><span class="price">$140</span></div>
+              <p data-i18n="menu.b7.d">Pan integral de la casa con guacamole, parmesano y huevo estrellado, con ensalada.</p>
+            </li>
+          </ul>
+        </div>
+
+        <!-- COMIDAS -->
+        <div class="menu__panel" id="panel-comidas" role="tabpanel" hidden>
+          <figure class="menu__photo">
+            <img src="assets/img/burritos.jpg" alt="Burritos de machaca con frijoles refritos y queso" loading="lazy">
+            <figcaption data-i18n="menu.figLunch">Burritos de machaca, sabor de Baja</figcaption>
+          </figure>
+          <ul class="menu__list">
+            <li class="menu__item">
+              <div class="menu__row"><h4><span data-i18n="menu.l1.n">Panini de arrachera</span> <span class="badge badge--fav" data-i18n="badge.top">Top</span></h4><span class="dots"></span><span class="price">$155</span></div>
+              <p data-i18n="menu.l1.d">Arrachera, queso chihuahua, tocino, queso fresco, tomate, espinaca y morrón.</p>
+            </li>
+            <li class="menu__item">
+              <div class="menu__row"><h4><span data-i18n="menu.l2.n">Panini pollo pesto</span></h4><span class="dots"></span><span class="price">$145</span></div>
+              <p data-i18n="menu.l2.d">Pollo a la plancha, queso chihuahua, queso fresco, parmesano, pesto y espinaca.</p>
+            </li>
+            <li class="menu__item">
+              <div class="menu__row"><h4><span data-i18n="menu.l3.n">Baguette arrachera BBQ</span></h4><span class="dots"></span><span class="price">$135</span></div>
+              <p data-i18n="menu.l3.d">Con lechuga, espinaca, tomate, pepino, morrón, germinado y vinagreta.</p>
+            </li>
+            <li class="menu__item">
+              <div class="menu__row"><h4><span data-i18n="menu.l4.n">Club sándwich</span></h4><span class="dots"></span><span class="price">$125</span></div>
+              <p data-i18n="menu.l4.d">Pollo, jamón, queso chihuahua, lechuga, espinaca, tomate, germinado, mayonesa y mostaza.</p>
+            </li>
+            <li class="menu__item">
+              <div class="menu__row"><h4><span data-i18n="menu.l5.n">Quesadillas de marlín</span></h4><span class="dots"></span><span class="price">$145</span></div>
+              <p data-i18n="menu.l5.d">Tres quesadillas con machaca de marlín, servidas con frijoles refritos.</p>
+            </li>
+            <li class="menu__item">
+              <div class="menu__row"><h4><span data-i18n="menu.l6.n">Burritos de machaca</span></h4><span class="dots"></span><span class="price">$145</span></div>
+              <p data-i18n="menu.l6.d">Tres burritos de machaca de res en tortilla de harina con frijoles refritos.</p>
+            </li>
+            <li class="menu__item">
+              <div class="menu__row"><h4><span data-i18n="menu.l7.n">Ensalada de manzana</span> <span class="badge badge--green" data-i18n="badge.fresh">Fresca</span></h4><span class="dots"></span><span class="price">$135</span></div>
+              <p data-i18n="menu.l7.d">Lechugas, espinaca, manzana verde, queso fresco, aguacate, cacahuates garapiñados y vinagreta.</p>
+            </li>
+          </ul>
+        </div>
+
+        <!-- BEBIDAS -->
+        <div class="menu__panel" id="panel-bebidas" role="tabpanel" hidden>
+          <figure class="menu__photo">
+            <img src="assets/img/frappe-oreo.jpg" alt="Frappe de Oreo con crema batida y frappe de caramelo" loading="lazy">
+            <figcaption data-i18n="menu.figDrinks">Frappe de Oreo, dulzura bien fría</figcaption>
+          </figure>
+          <ul class="menu__list">
+            <li class="menu__item">
+              <div class="menu__row"><h4><span data-i18n="menu.d1.n">Frappes con café</span> <span class="badge badge--fav" data-i18n="badge.refresh">Refrescante</span></h4><span class="dots"></span><span class="price">$75 / $84</span></div>
+              <p data-i18n="menu.d1.d">Original, caramelo, cajeta, cereza, moka, Oreo o chocolate blanco. Ferrero, coco y mazapán $82 / $88.</p>
+            </li>
+            <li class="menu__item">
+              <div class="menu__row"><h4><span data-i18n="menu.d2.n">Frappe chai</span></h4><span class="dots"></span><span class="price">$88 / $94</span></div>
+              <p data-i18n="menu.d2.d">Especias, vainilla, manzana o matcha.</p>
+            </li>
+            <li class="menu__item">
+              <div class="menu__row"><h4><span data-i18n="menu.d3.n">Ice latte</span></h4><span class="dots"></span><span class="price">$60 / $70</span></div>
+              <p data-i18n="menu.d3.d">Con sabor extra (CinnaRolls, caramelo, moka, cajeta, irlandés, Nutella o coco) $75 / $85.</p>
+            </li>
+            <li class="menu__item">
+              <div class="menu__row"><h4><span data-i18n="menu.d4.n">Smoothies</span></h4><span class="dots"></span><span class="price">$75 / $84</span></div>
+              <p data-i18n="menu.d4.d">Base de leche: fresa, mango, piña, plátano o moras.</p>
+            </li>
+            <li class="menu__item">
+              <div class="menu__row"><h4><span data-i18n="menu.d5.n">Soda italiana</span></h4><span class="dots"></span><span class="price">$60</span></div>
+              <p data-i18n="menu.d5.d">Fresa, cereza, frambuesa, kiwi, arándano, maracuyá, durazno, manzana verde y más.</p>
+            </li>
+            <li class="menu__item">
+              <div class="menu__row"><h4><span data-i18n="menu.d6.n">Tisanas y tés</span></h4><span class="dots"></span><span class="price">$60 / $70</span></div>
+              <p data-i18n="menu.d6.d">Verde, menta, chai herbal, manzanilla, frutos rojos, maracuyá, ponche de guayaba…</p>
+            </li>
+            <li class="menu__item">
+              <div class="menu__row"><h4><span data-i18n="menu.d7.n">Jugos y limonadas</span> <span class="badge badge--green" data-i18n="badge.natural">Natural</span></h4><span class="dots"></span><span class="price">$45–75</span></div>
+              <p data-i18n="menu.d7.d">Jugo de naranja, jugo verde, limonada o naranjada natural o mineral.</p>
+            </li>
+          </ul>
+        </div>
+
+        <p class="menu__note reveal" data-i18n="menu.note">Precios en pesos mexicanos, pueden variar sin previo aviso · Encuentra el menú completo en sucursal.</p>
+      </div>
+    </section>
+
+    <!-- ============ 4. GALERÍA ============ -->
+    <section class="gallery section" id="galeria">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="eyebrow"><svg class="ic ic--amber"><use href="#ic-spiral"/></svg> <span data-i18n="gal.eyebrow">Para antojarte</span></p>
+          <h2 data-i18n="gal.title">Se ve rico… <em>y sabe mejor</em></h2>
+          <p class="section__lead" data-i18n="gal.lead">Un vistazo a lo que sale de nuestro horno y de nuestra barra todos los días.</p>
+        </div>
+
+        <div class="gallery__grid" id="galleryGrid">
+          <figure class="gallery__item g-wide reveal" data-i18n-caption="gal.c1" data-caption="Vitrina de roles recién glaseados — llegan calientitos cada mañana">
+            <img src="assets/img/roles-vitrina.jpg" alt="Vitrina llena de roles de canela glaseados" loading="lazy">
+          </figure>
+          <figure class="gallery__item g-tall reveal" data-i18n-caption="gal.c2" data-caption="Rol clásico con lattes helados, en la barra">
+            <img src="assets/img/roll-cafes.jpg" alt="Rol de canela con Nutella y dos cafés helados" loading="lazy">
+          </figure>
+          <figure class="gallery__item reveal" data-i18n-caption="gal.c3" data-caption="Chilaquiles verdes con crema y queso fresco">
+            <img src="assets/img/chilaquiles.jpg" alt="Chilaquiles verdes con chorizo y café latte" loading="lazy">
+          </figure>
+          <figure class="gallery__item reveal" data-i18n-caption="gal.c4" data-caption="Desayuno americano: huevos, tocino y rol espolvoreado">
+            <img src="assets/img/desayuno-americano.jpg" alt="Plato de desayuno americano con rol de canela, huevos y tocino" loading="lazy">
+          </figure>
+          <figure class="gallery__item g-tall reveal" data-i18n-caption="gal.c5" data-caption="Nuestro rol coronado con Nutella">
+            <img src="assets/img/roll-chocolate.jpg" alt="Rol de canela con espiral de Nutella" loading="lazy">
+          </figure>
+          <figure class="gallery__item reveal" data-i18n-caption="gal.c6" data-caption="Omelette con ensalada fresca y fruta de temporada">
+            <img src="assets/img/omelette.jpg" alt="Omelette con ensalada, fruta y café" loading="lazy">
+          </figure>
+          <figure class="gallery__item reveal" data-i18n-caption="gal.c7" data-caption="Frappes de Oreo y caramelo, bien fríos">
+            <img src="assets/img/frappe-oreo.jpg" alt="Frappe de Oreo y frappe de caramelo con crema batida" loading="lazy">
+          </figure>
+          <figure class="gallery__item g-tall reveal" data-i18n-caption="gal.c8" data-caption="Avocado toast con huevo estrellado y ensalada">
+            <img src="assets/img/desayuno-ligero.jpg" alt="Avocado toast con huevo y ensalada con germinados" loading="lazy">
+          </figure>
+          <figure class="gallery__item reveal" data-i18n-caption="gal.c9" data-caption="Rol de canela con corazón — hecho con amor">
+            <img src="assets/img/roll-cafe.jpg" alt="Rol de canela con forma de corazón y café con leche" loading="lazy">
+          </figure>
+          <figure class="gallery__item reveal" data-i18n-caption="gal.c10" data-caption="Burritos de machaca con frijoles refritos">
+            <img src="assets/img/burritos.jpg" alt="Burritos de machaca de res con frijoles y queso" loading="lazy">
+          </figure>
+          <figure class="gallery__item g-wide reveal" data-i18n-caption="gal.c11" data-caption="Café para llevar y caminar el malecón">
+            <img src="assets/img/cafe-malecon.jpg" alt="Vaso de café CinnaRolls con palmeras y el mar de fondo" loading="lazy">
+          </figure>
+          <figure class="gallery__item reveal" data-i18n-caption="gal.c12" data-caption="Nuestra barra: pasteles, muffins y roles del día">
+            <img src="assets/img/area-trabajo.jpg" alt="Barra de CinnaRolls con vitrinas de pasteles y roles" loading="lazy">
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 5. RESERVAR POR WHATSAPP ============ -->
+    <section class="reserve section" id="reservar">
+      <div class="container reserve__grid">
+        <div class="reserve__copy reveal">
+          <p class="eyebrow eyebrow--light"><svg class="ic ic--amber"><use href="#ic-whatsapp"/></svg> <span data-i18n="res.eyebrow">Reserva tu visita</span></p>
+          <h2 data-i18n="res.title">Tu mesa te espera,<br><em>a un WhatsApp</em> de distancia</h2>
+          <p class="section__lead" data-i18n="res.lead">
+            Cuéntanos cuándo vienes y cuántos son. Nosotros nos encargamos de que tu
+            lugar esté listo, con aroma a canela incluido.
+          </p>
+          <ol class="reserve__steps">
+            <li data-i18n="res.s1"><strong>1.</strong> Llena los datos de tu visita</li>
+            <li data-i18n="res.s2"><strong>2.</strong> Envíanos el mensaje por WhatsApp</li>
+            <li data-i18n="res.s3"><strong>3.</strong> Llega y disfruta 🥐</li>
+          </ol>
+          <a class="reserve__phone" href="https://wa.me/526122914014" target="_blank" rel="noopener">
+            <svg class="ic"><use href="#ic-whatsapp"/></svg> 612 291 4014
+          </a>
+        </div>
+
+        <form class="reserve__card reveal d-1" id="reserveForm">
+          <h3 data-i18n="form.title">Agenda tu mesa</h3>
+          <div class="field">
+            <label for="rName" data-i18n="form.name">Nombre</label>
+            <input type="text" id="rName" name="name" placeholder="Tu nombre" data-i18n-placeholder="form.namePh" required>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="rPeople" data-i18n="form.people">Personas</label>
+              <select id="rPeople" name="people">
+                <option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7+</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="rDate" data-i18n="form.date">Fecha</label>
+              <input type="date" id="rDate" name="date" required>
+            </div>
+            <div class="field">
+              <label for="rTime" data-i18n="form.time">Hora</label>
+              <input type="time" id="rTime" name="time" min="07:00" max="22:30" value="09:00" required>
+            </div>
+          </div>
+          <div class="field">
+            <label for="rBranch" data-i18n="form.branch">Sucursal</label>
+            <select id="rBranch" name="branch">
+              <option value="Malecón">Malecón — Paseo Álvaro Obregón</option>
+              <option value="Centro Cultural">Centro Cultural — 16 de Septiembre esq. Belisario Domínguez</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn--whatsapp btn--block">
+            <svg class="ic"><use href="#ic-whatsapp"/></svg> <span data-i18n="form.submit">Reservar por WhatsApp</span>
+          </button>
+          <p class="reserve__hint" data-i18n="form.hint">Se abrirá WhatsApp con tu mensaje listo para enviar.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============ 6. VISÍTANOS / MAPA ============ -->
+    <section class="visit section" id="visitanos">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="eyebrow"><svg class="ic ic--amber"><use href="#ic-pin"/></svg> <span data-i18n="visit.eyebrow">Visítanos</span></p>
+          <h2 data-i18n="visit.title">Dos rincones con aroma<br>a canela <em>en La Paz</em></h2>
+          <p class="visit__hours">
+            <svg class="ic ic--amber"><use href="#ic-clock"/></svg>
+            <span data-i18n="visit.hours"><strong>Todos los días</strong>&nbsp;·&nbsp;7:00 am – 10:30 pm</span>
+          </p>
+        </div>
+
+        <div class="visit__grid">
+          <div class="visit__map reveal" id="map" aria-label="Mapa con las sucursales de CinnaRolls"></div>
+
+          <div class="visit__cards">
+            <article class="location reveal is-active" data-branch="malecon" tabindex="0">
+              <span class="location__num">01</span>
+              <h3 data-i18n="visit.loc1.name">Sucursal Malecón</h3>
+              <p class="location__addr"><svg class="ic"><use href="#ic-pin"/></svg> <span data-i18n="visit.loc1.addr">Paseo Álvaro Obregón 550, Centro,<br>frente al malecón de La Paz</span></p>
+              <p class="location__tel"><svg class="ic"><use href="#ic-phone"/></svg> <a href="tel:+526121293090">612 129 3090</a></p>
+              <a class="btn btn--ghost" href="https://www.google.com/maps/dir/?api=1&destination=24.1593835,-110.3190411" target="_blank" rel="noopener"><span data-i18n="visit.directions">Cómo llegar</span> <svg class="ic"><use href="#ic-arrow"/></svg></a>
+            </article>
+
+            <article class="location reveal d-1" data-branch="cultural" tabindex="0">
+              <span class="location__num">02</span>
+              <h3 data-i18n="visit.loc2.name">Sucursal Centro Cultural</h3>
+              <p class="location__addr"><svg class="ic"><use href="#ic-pin"/></svg> <span data-i18n="visit.loc2.addr">16 de Septiembre 120, esq. Belisario Domínguez, Centro</span></p>
+              <p class="location__tel"><svg class="ic"><use href="#ic-phone"/></svg> <a href="tel:+526121978828">612 197 8828</a></p>
+              <a class="btn btn--ghost" href="https://www.google.com/maps/dir/?api=1&destination=24.1620477,-110.3154512" target="_blank" rel="noopener"><span data-i18n="visit.directions">Cómo llegar</span> <svg class="ic"><use href="#ic-arrow"/></svg></a>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ 7. FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div class="footer__brand">
+        <a href="#inicio" class="brand brand--footer">
+          <span class="brand__mark"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#D9952F"/><path d="M32 32 a3 3 0 0 1 6 0 a6 6 0 0 1 -12 0 a9 9 0 0 1 18 0 a12 12 0 0 1 -24 0 a15 15 0 0 1 30 0" fill="none" stroke="#1D150F" stroke-width="4.5" stroke-linecap="round"/></svg></span>
+          <span class="brand__text">
+            <span class="brand__name">CinnaRolls</span>
+            <span class="brand__tag">Bakery &amp; Coffee</span>
+          </span>
+        </a>
+        <p data-i18n="footer.tagline">Roles de canela, café y cocina fresca frente al Mar de Cortés. Hechos con calma, servidos con cariño.</p>
+        <div class="footer__social">
+          <a href="https://www.facebook.com/cinnarolls" target="_blank" rel="noopener" aria-label="Facebook de CinnaRolls"><svg class="ic"><use href="#ic-facebook"/></svg></a>
+          <a href="https://wa.me/526122914014" target="_blank" rel="noopener" aria-label="WhatsApp de CinnaRolls"><svg class="ic"><use href="#ic-whatsapp"/></svg></a>
+        </div>
+      </div>
+
+      <nav class="footer__col" aria-label="Enlaces del sitio">
+        <h4 data-i18n="footer.explore">Explora</h4>
+        <a href="#inicio" data-i18n="nav.home">Inicio</a>
+        <a href="#nosotros" data-i18n="nav.about">Nosotros</a>
+        <a href="#menu" data-i18n="nav.menu">Menú</a>
+        <a href="#galeria" data-i18n="nav.gallery">Galería</a>
+        <a href="#reservar" data-i18n="footer.reservations">Reservaciones</a>
+      </nav>
+
+      <div class="footer__col">
+        <h4 data-i18n="footer.hoursH">Horario</h4>
+        <p><svg class="ic"><use href="#ic-clock"/></svg> <span data-i18n="footer.hoursP">Todos los días<br>7:00 am – 10:30 pm</span></p>
+        <h4 data-i18n="footer.resH">Reservaciones</h4>
+        <p><svg class="ic"><use href="#ic-whatsapp"/></svg> <a href="https://wa.me/526122914014" target="_blank" rel="noopener">612 291 4014</a></p>
+      </div>
+
+      <div class="footer__col">
+        <h4 data-i18n="footer.branchesH">Sucursales</h4>
+        <p><svg class="ic"><use href="#ic-pin"/></svg> <strong>Malecón</strong><br>Paseo Álvaro Obregón 550, Centro · <a href="tel:+526121293090">612 129 3090</a></p>
+        <p><svg class="ic"><use href="#ic-pin"/></svg> <strong>Centro Cultural</strong><br>16 de Septiembre esq. Belisario Domínguez · <a href="tel:+526121978828">612 197 8828</a></p>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="container">
+        <p>© <span id="year">2026</span> CinnaRolls Bakery &amp; Coffee · La Paz, B.C.S. <span data-i18n="footer.made">— Hecho con <span class="heart">♥</span> y mucha canela.</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ LIGHTBOX ============ -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Galería ampliada" hidden>
+    <button class="lightbox__close" id="lbClose" aria-label="Cerrar">✕</button>
+    <button class="lightbox__nav lightbox__nav--prev" id="lbPrev" aria-label="Anterior">‹</button>
+    <figure class="lightbox__stage">
+      <img id="lbImg" src="" alt="">
+      <figcaption id="lbCaption"></figcaption>
+    </figure>
+    <button class="lightbox__nav lightbox__nav--next" id="lbNext" aria-label="Siguiente">›</button>
+  </div>
+
+  <!-- Botón volver arriba -->
+  <button class="totop" id="toTop" aria-label="Volver arriba">
+    <svg class="ic"><use href="#ic-spiral"/></svg>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
