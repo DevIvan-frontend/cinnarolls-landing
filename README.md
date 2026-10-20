@@ -2,6 +2,8 @@
 
 Landing page del restaurante y cafetería **CinnaRolls** en La Paz, Baja California Sur: roles de canela horneados cada mañana, café de especialidad, desayunos y comida balanceada frente al malecón.
 
+**🌐 Sitio en línea:** <https://devivan-frontend.github.io/cinnarolls-landing/>
+
 ## Secciones
 
 1. **Presentación** — hero con el nombre, introducción y accesos rápidos.
